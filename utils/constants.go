@@ -5,4 +5,5 @@ const (
 	FilePath        = "DB.txt"
 	Nickname        = "serhii"
 	EmailSender     = "cergoneee@gmail.com"
+	ApiKey          = "APIKEY"
 )

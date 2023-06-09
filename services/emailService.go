@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
@@ -34,7 +35,7 @@ func SendRateForSubscribedEmails() error {
 	from := mail.NewEmail(utils.Nickname, utils.EmailSender)
 	htmlContent := fmt.Sprintf(htmlContentTemplate, exchangeRate.Value)
 
-	client := sendgrid.NewSendClient("key")
+	client := sendgrid.NewSendClient(os.Getenv(utils.ApiKey))
 
 	for _, email := range emails {
 		to := mail.NewEmail("", email)
