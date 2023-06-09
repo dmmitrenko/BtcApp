@@ -2,13 +2,16 @@ package services
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
 	"example/BtcApp/models"
 	"example/BtcApp/utils"
 )
+
+type ExchangeRateResponse struct {
+	Rates map[string]models.Rate `json:"rates"`
+}
 
 func FetchExchangeRate() (models.Rate, error) {
 	url := utils.CoingeckoAPIURL
@@ -24,16 +27,13 @@ func FetchExchangeRate() (models.Rate, error) {
 		return models.Rate{}, err
 	}
 
-	var exchangeRates map[string]models.Rate
+	var exchangeRates ExchangeRateResponse
 	err = json.Unmarshal(body, &exchangeRates)
 	if err != nil {
 		return models.Rate{}, err
 	}
 
-	hryvniaRate, ok := exchangeRates["uah"]
-	if !ok {
-		return models.Rate{}, fmt.Errorf("Exchange rate for UAH not found")
-	}
+	hryvniaRate := exchangeRates.Rates["uah"]
 
 	return hryvniaRate, nil
 }
