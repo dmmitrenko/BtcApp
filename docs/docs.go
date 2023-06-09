@@ -73,17 +73,20 @@ const docTemplate = `{
         },
         "/subscribe": {
             "post": {
-                "description": "test",
+                "description": "Send an emails",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "subscription"
                 ],
-                "summary": "test",
+                "summary": "Send an email with the current rate to all subscribed emails.",
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

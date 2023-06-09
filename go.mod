@@ -1,4 +1,4 @@
-module example/BtcApp
+module BtcApp
 
 go 1.20
 

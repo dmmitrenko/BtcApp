@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"example/BtcApp/services"
+	"BtcApp/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

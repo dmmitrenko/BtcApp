@@ -1,10 +1,10 @@
 package main
 
 import (
-	"example/BtcApp/handlers"
+	"BtcApp/handlers"
 	"log"
 
-	_ "example/BtcApp/docs"
+	_ "BtcApp/docs"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

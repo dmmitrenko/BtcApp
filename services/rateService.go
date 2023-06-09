@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"example/BtcApp/models"
-	"example/BtcApp/utils"
+	"BtcApp/models"
+	"BtcApp/utils"
 )
 
 type ExchangeRateResponse struct {

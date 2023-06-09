@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"example/BtcApp/services"
+	"BtcApp/services"
 	"net/http"
 	"regexp"
 
@@ -36,8 +36,8 @@ func SubscribeEmail(c *gin.Context) {
 }
 
 // SubscribeEmail godoc
-// @Summary test
-// @Description test
+// @Summary Send an email with the current rate to all subscribed emails.
+// @Description Send an emails
 // @Tags subscription
 // @Produce json
 // @Success 200

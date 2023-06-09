@@ -43,13 +43,15 @@ paths:
       - rate
   /subscribe:
     post:
-      description: test
+      description: Send an emails
       produces:
       - application/json
       responses:
         "200":
           description: OK
-      summary: test
+        "500":
+          description: Internal Server Error
+      summary: Send an email with the current rate to all subscribed emails.
       tags:
       - subscription
 swagger: "2.0"

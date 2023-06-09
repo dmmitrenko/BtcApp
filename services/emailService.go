@@ -8,8 +8,8 @@ import (
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 
-	"example/BtcApp/repositories"
-	"example/BtcApp/utils"
+	"BtcApp/repositories"
+	"BtcApp/utils"
 )
 
 const (

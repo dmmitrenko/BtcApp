@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"example/BtcApp/utils"
+	"BtcApp/utils"
 	"fmt"
 	"io/ioutil"
 	"os"
