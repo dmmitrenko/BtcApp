@@ -1,17 +1,45 @@
 # CurrencyRateApp
-### Web api переписано з [.net6](https://github.com/dmmitrenko/CurrencyExchangeBTC)
-При розгортанні контейнера , ви можете отримати доступ до документації Swagger, додавши шлях "/swagger/index.html" до URL-адреси. 
+### File tree
+``` powershell
+├── .gitignore
+├── Dockerfile
+├── go.mod
+├── go.sum
+├── README.md
+├── api/
+│   ├── controller/
+│   │   ├── emailController.go
+│   │   └── rateController.go
+│   ├── docs/
+│   │   ├── docs.go
+│   │   ├── swagger.json
+│   │   └── swagger.yaml
+│   ├── middleware/
+│   │   └── exceptionMiddleware.go
+│   └── route/
+│       └── route.go
+├── cmd/
+│   └── main.go
+├── domain/
+│   └── constants.go
+├── domain/
+│   └── models/
+│       └── Rate.go
+├── repositories/
+│   └── emailRepository.go
+└── services/
+    ├── apiClient.go
+    ├── emailService.go
+    └── rateService.go
+```
 
-### Запуск АПІ
+### API launch
 
-Для правильного запуску API потрібно
-- Збудувати Docker-імейдж з відповідними налаштуваннями. 
+- Build a Docker image with the appropriate settings. 
 ```docker
 docker build -t <your-image-name> .
 ```
-  - Запустити контейнер на основі побудованого імейджу.
+- Run the container based on the built image.
 ```docker
-docker run -p 8080:8080 --env APIKEY=<ТУТ АПІ ключ, який я відправив у форму!> <your-image-name>
+docker run -p 8080:8080 --env APIKEY=<API key for sending messages> <your-image-name>
 ```
-
-Залишаючи АПІ ключ у відкритому доступі мій аккаунт заблокує тому передавайте його під час виконання команди
