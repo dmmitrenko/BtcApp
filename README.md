@@ -1,4 +1,4 @@
-# BtcApp
+# CurrencyRateApp
 ### Web api переписано з [.net6](https://github.com/dmmitrenko/CurrencyExchangeBTC)
 При розгортанні контейнера , ви можете отримати доступ до документації Swagger, додавши шлях "/swagger/index.html" до URL-адреси. 
 

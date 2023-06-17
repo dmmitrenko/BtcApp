@@ -1,39 +1,48 @@
 package services
 
 import (
+	constants "CurrencyRateApp/domain"
 	"encoding/json"
 	"io/ioutil"
-	"net/http"
+	"strconv"
+	"strings"
+)
 
-	"BtcApp/models"
-	"BtcApp/utils"
+const (
+	coinParameters     = "ids"
+	currencyParameters = "vs_currencies"
+	currencyPrecision  = "precision"
 )
 
 type ExchangeRateResponse struct {
-	Rates map[string]models.Rate `json:"rates"`
+	Rates map[string]map[string]float64 `json:"rates"`
 }
 
-func FetchExchangeRate() (models.Rate, error) {
-	url := utils.CoingeckoAPIURL
+func FetchExchangeRate(coins []string, currencies []string, precision uint) (ExchangeRateResponse, error) {
+	url := constants.ApiBaseUrl + constants.SimplePriceEndpoint
 
-	resp, err := http.Get(url)
+	queryParams := map[string]string{
+		coinParameters:     strings.Join(coins, ","),
+		currencyParameters: strings.Join(currencies, ","),
+		currencyPrecision:  strconv.Itoa(int(precision)),
+	}
+
+	resp, err := makeAPIRequest(url, queryParams)
 	if err != nil {
-		return models.Rate{}, err
+		return ExchangeRateResponse{}, err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return models.Rate{}, err
+		return ExchangeRateResponse{}, err
 	}
 
 	var exchangeRates ExchangeRateResponse
-	err = json.Unmarshal(body, &exchangeRates)
+	err = json.Unmarshal(body, &exchangeRates.Rates)
 	if err != nil {
-		return models.Rate{}, err
+		return ExchangeRateResponse{}, err
 	}
 
-	hryvniaRate := exchangeRates.Rates["uah"]
-
-	return hryvniaRate, nil
+	return exchangeRates, nil
 }

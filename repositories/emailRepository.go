@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"BtcApp/utils"
+	constants "CurrencyRateApp/domain"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -20,7 +20,7 @@ func AppendEmailToFile(email string) error {
 		}
 	}
 
-	file, err := os.OpenFile(utils.FilePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	file, err := os.OpenFile(constants.FilePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return err
 	}
@@ -35,15 +35,15 @@ func AppendEmailToFile(email string) error {
 }
 
 func GetAllEmails() ([]string, error) {
-	if _, err := os.Stat(utils.FilePath); os.IsNotExist(err) {
+	if _, err := os.Stat(constants.FilePath); os.IsNotExist(err) {
 		// Create the file if it doesn't exist
-		_, err := os.Create(utils.FilePath)
+		_, err := os.Create(constants.FilePath)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	data, err := ioutil.ReadFile(utils.FilePath)
+	data, err := ioutil.ReadFile(constants.FilePath)
 	if err != nil {
 		return nil, err
 	}

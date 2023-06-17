@@ -8,38 +8,37 @@ import (
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 
-	"BtcApp/repositories"
-	"BtcApp/utils"
-)
-
-const (
-	subjectTemplate     = "BTC to UAH rate"
-	htmlContentTemplate = "<strong>Current rate: 1BTC = %f</strong>"
+	constants "CurrencyRateApp/domain"
+	"CurrencyRateApp/repositories"
 )
 
 func AddEmail(email string) error {
 	return repositories.AppendEmailToFile(email)
 }
 
-func SendRateForSubscribedEmails() error {
+func SendRateForSubscribedEmails(coin string, currency string) error {
 	emails, err := repositories.GetAllEmails()
 	if err != nil {
 		return err
 	}
 
-	exchangeRate, err := FetchExchangeRate()
+	rates, err := FetchExchangeRate([]string{coin}, []string{currency}, 2)
 	if err != nil {
 		return err
 	}
 
-	from := mail.NewEmail(utils.Nickname, utils.EmailSender)
-	htmlContent := fmt.Sprintf(htmlContentTemplate, exchangeRate.Value)
+	from := mail.NewEmail(constants.Nickname, constants.EmailSender)
+	htmlContentTemplate := "<p>RATE: %.2f</p>"
 
-	client := sendgrid.NewSendClient(os.Getenv(utils.ApiKey))
+	client := sendgrid.NewSendClient(os.Getenv(constants.ApiKey))
 
 	for _, email := range emails {
 		to := mail.NewEmail("", email)
-		plainTextContent := fmt.Sprintf("RATE: %f", exchangeRate.Value)
+
+		plainTextContent := fmt.Sprintf("RATE: %.2f", rates.Rates[coin][currency])
+		htmlContent := fmt.Sprintf(htmlContentTemplate, rates.Rates[coin][currency])
+		subjectTemplate := fmt.Sprintf("%s to %s rate", coin, currency)
+
 		message := mail.NewSingleEmail(from, subjectTemplate, to, plainTextContent, htmlContent)
 
 		response, err := client.Send(message)

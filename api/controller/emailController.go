@@ -1,7 +1,8 @@
-package handlers
+package controller
 
 import (
-	"BtcApp/services"
+	constants "CurrencyRateApp/domain"
+	"CurrencyRateApp/services"
 	"net/http"
 	"regexp"
 
@@ -28,7 +29,7 @@ func SubscribeEmail(c *gin.Context) {
 
 	err := services.AddEmail(email)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -44,9 +45,10 @@ func SubscribeEmail(c *gin.Context) {
 // @Failure 500
 // @Router /subscribe [post]
 func SendEmails(c *gin.Context) {
-	err := services.SendRateForSubscribedEmails()
+
+	err := services.SendRateForSubscribedEmails(constants.Bitcoin, constants.UAH)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Something went wrong :("})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
